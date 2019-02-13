@@ -4,8 +4,10 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 """
-Routing: Allows us to swith between views using URLs 
-create a route and a view
+Routing: Allows us to switch between views using URLs 
+create another template and another route
+use Jinja templating
+
 """
 @app.route('/')
 def index():
@@ -15,6 +17,11 @@ def index():
 @app.route('/about')
 def about():
     return render_template("about.html")
+
+
+@app.route('/contact')
+def contact():
+    return render_template("contact.html")
 
 
 if __name__ == '__main__':
