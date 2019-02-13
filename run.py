@@ -24,6 +24,11 @@ def contact():
     return render_template("contact.html")
 
 
+@app.route('/carees.html')
+def carees():
+    return render_template("carees.html")
+
+
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
             port=int(os.environ.get('PORT')),
