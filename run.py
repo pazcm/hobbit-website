@@ -1,14 +1,10 @@
 import os
 import json
-from flask import Flask, render_template
+from flask import Flask, render_template, request
+# request library finds out which method we used, and also it will contain our form object when we’ve posted it.
 
 app = Flask(__name__)
 
-"""
-by default all Flask's views will handle a GET request,
-when we need to use other methods like POST, DELETE or PUT,
-we have to specify the state that our route can accept. (see contact view -> Form)
-"""
 
 @app.route('/')
 def index():
@@ -23,21 +19,23 @@ def about():
     return render_template("about.html", page_title="About", company=data)
 
 
-@app.route("/about/<member_name>")
+@app.route('/about/<member_name>')
 def about_member(member_name):
     member = {}
-    
+   
     with open("data/company.json", "r") as json_data:
         data = json.load(json_data)
         for obj in data:
             if obj["url"] == member_name:
                 member = obj
-    
+   
     return render_template("member.html", member=member)
 
 
 @app.route('/contact', methods=["GET", "POST"])
 def contact():
+    if request.method == "POST":
+        print(request.form) # we retrieve data from our fields form
     return render_template("contact.html", page_title="Contact")
 
 
@@ -47,5 +45,5 @@ def careers():
 
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
-        port=int(os.environ.get('PORT')),
-        debug=True)
+            port=int(os.environ.get('PORT')),
+debug=True)
