@@ -1,9 +1,12 @@
 import os
 import json
-from flask import Flask, render_template, request
-# request library finds out which method we used, and also it will contain our form object when we’ve posted it.
+from flask import Flask, render_template, request, flash
+# flash library display a non-permanent message to the user, until page is refreshed
+
 
 app = Flask(__name__)
+# provide a secret key that Flask can use to sign messages
+app.secret_key = 'some_secret'
 
 
 @app.route('/')
@@ -35,7 +38,10 @@ def about_member(member_name):
 @app.route('/contact', methods=["GET", "POST"])
 def contact():
     if request.method == "POST":
-        print(request.form) # we retrieve data from our fields form
+        # call flash function & udpdate contact.html template
+        flash("Thanks {}, we have received your message".format(
+            request.form["name"]
+        ))
     return render_template("contact.html", page_title="Contact")
 
 
