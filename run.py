@@ -4,6 +4,11 @@ from flask import Flask, render_template
 
 app = Flask(__name__)
 
+"""
+by default all Flask's views will handle a GET request,
+when we need to use other methods like POST, DELETE or PUT,
+we have to specify the state that our route can accept. (see contact view -> Form)
+"""
 
 @app.route('/')
 def index():
@@ -31,7 +36,7 @@ def about_member(member_name):
     return render_template("member.html", member=member)
 
 
-@app.route('/contact')
+@app.route('/contact', methods=["GET", "POST"])
 def contact():
     return render_template("contact.html", page_title="Contact")
 
